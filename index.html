@@ -17,11 +17,11 @@
         </div>
       </div>
       <div id="unity-warning"> </div>
-      <div id="unity-footer">
+      <!-- <div id="unity-footer">
         <div id="unity-logo-title-footer"></div>
         <div id="unity-fullscreen-button"></div>
         <div id="unity-build-title">tutorial-unity</div>
-      </div>
+      </div> -->
     </div>
     <script>
       var canvas = document.querySelector("#unity-canvas");
@@ -98,8 +98,18 @@
 
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
+        const screenAspect = window.innerWidth / window.innerHeight;
+        const gameAspect = 16 / 9;
+
+        if (screenAspect > gameAspect) {
+          // Screen is wider than the game aspect ratio
+          canvas.style.width = `${window.innerHeight * gameAspect}px`;
+          canvas.style.height = `${window.innerHeight}px`;
+        } else {
+          // Screen is taller than the game aspect ratio
+          canvas.style.width = `${window.innerWidth}px`;
+          canvas.style.height = `${window.innerWidth / gameAspect}px`;
+        }
       }
 
       document.querySelector("#unity-loading-bar").style.display = "block";
